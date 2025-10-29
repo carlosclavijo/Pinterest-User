@@ -17,10 +17,10 @@ func NewDomainEvent() *DomainEvent {
 	}
 }
 
-func (d *DomainEvent) Id() uuid.UUID {
-	return d.id
+func (domain *DomainEvent) Id() uuid.UUID {
+	return domain.id
 }
 
-func (d *DomainEvent) OccurredOn() time.Time {
-	return d.occurredOn
+func (domain *DomainEvent) OccurredOn() time.Time {
+	return domain.occurredOn
 }

@@ -11,6 +11,7 @@ type BirthDate struct {
 }
 
 var (
+	ErrEmptyBirth  = errors.New("birthdate cannot be nil")
 	ErrFutureDate  = errors.New("birthdate cannot be in the future")
 	ErrUnderTwelve = errors.New("user must be at least 12 years old")
 )
@@ -30,6 +31,6 @@ func isAnAdult(v time.Time) bool {
 	return !v.After(yearsAgo)
 }
 
-func (b BirthDate) Time() time.Time {
-	return b.birth
+func (birth BirthDate) Time() time.Time {
+	return birth.birth
 }

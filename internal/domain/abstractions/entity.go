@@ -14,14 +14,14 @@ func NewEntity(id uuid.UUID) *Entity {
 	}
 }
 
-func (e *Entity) DomainEvents() []DomainEvent {
-	return e.domainEvents
+func (entity *Entity) DomainEvents() []DomainEvent {
+	return entity.domainEvents
 }
 
-func (e *Entity) AddDomainEvent(event DomainEvent) {
-	e.domainEvents = append(e.domainEvents, event)
+func (entity *Entity) AddDomainEvent(event DomainEvent) {
+	entity.domainEvents = append(entity.domainEvents, event)
 }
 
-func (e *Entity) ClearDomainEvents() {
-	e.domainEvents = nil
+func (entity *Entity) ClearDomainEvents() {
+	entity.domainEvents = nil
 }

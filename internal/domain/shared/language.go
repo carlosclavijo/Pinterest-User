@@ -8,22 +8,22 @@ import (
 type Language string
 
 const (
-	English    Language = "en"
-	Spanish    Language = "es"
-	French     Language = "fr"
-	German     Language = "de"
-	Italian    Language = "it"
-	Portuguese Language = "pt"
-	Japanese   Language = "ja"
-	Chinese    Language = "zh"
-	Korean     Language = "ko"
-	Hindi      Language = "hi"
+	English    Language = "EN"
+	Spanish    Language = "ES"
+	French     Language = "FR"
+	German     Language = "DE"
+	Italian    Language = "IT"
+	Portuguese Language = "PT"
+	Japanese   Language = "JA"
+	Chinese    Language = "CH"
+	Korean     Language = "KO"
+	Hindi      Language = "HI"
 )
 
 var ErrNotALanguage = errors.New("is not a language")
 
-func (l Language) String() string {
-	switch l {
+func (language Language) String() string {
+	switch language {
 	case English:
 		return "English"
 	case Spanish:
@@ -45,31 +45,31 @@ func (l Language) String() string {
 	case Hindi:
 		return "Hindi"
 	default:
-		return "unknown"
+		return "Unknown"
 	}
 }
 
 func ParseLanguage(language string) (Language, error) {
 	switch language {
-	case "en", "English":
+	case "EN", "English":
 		return English, nil
-	case "es", "Spanish":
+	case "ES", "Spanish":
 		return Spanish, nil
-	case "fr", "French":
+	case "FR", "French":
 		return French, nil
-	case "de", "German":
+	case "DE", "German":
 		return German, nil
-	case "it", "Italian":
+	case "IT", "Italian":
 		return Italian, nil
-	case "pt", "Portuguese":
+	case "PT", "Portuguese":
 		return Portuguese, nil
-	case "ja", "Japanese":
+	case "JA", "Japanese":
 		return Japanese, nil
-	case "zh", "Chinese":
+	case "CH", "Chinese":
 		return Chinese, nil
-	case "ko", "Korean":
+	case "KO", "Korean":
 		return Korean, nil
-	case "hi", "Hindi":
+	case "HI", "Hindi":
 		return Hindi, nil
 	default:
 		return "", fmt.Errorf("%w: got %s", ErrNotALanguage, language)

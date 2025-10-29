@@ -13,7 +13,7 @@ type Email struct {
 	total  string
 }
 
-const regex = `^[a-zA-Z0-9]([a-zA-Z0-9._%+\-]*[a-zA-Z0-9])?@([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\.)+[a-zA-Z]{2,}$`
+const emailRegex = `^[a-zA-Z0-9]([a-zA-Z0-9._%+\-]*[a-zA-Z0-9])?@([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\.)+[a-zA-Z]{2,}$`
 
 var (
 	ErrEmptyEmail      = errors.New("email cannot be empty")
@@ -26,7 +26,7 @@ func NewEmail(email string) (Email, error) {
 	if email == "" {
 		return Email{}, ErrEmptyEmail
 	}
-	if !regexp.MustCompile(regex).MatchString(email) {
+	if !regexp.MustCompile(emailRegex).MatchString(email) {
 		return Email{}, fmt.Errorf("%w: got %s", ErrInvalidEmail, email)
 	}
 	parts := strings.Split(email, "@")
@@ -40,14 +40,14 @@ func NewEmail(email string) (Email, error) {
 	return Email{local: localPart, domain: domainPart, total: email}, nil
 }
 
-func (e Email) String() string {
-	return e.total
+func (email Email) String() string {
+	return email.total
 }
 
-func (e Email) Local() string {
-	return e.local
+func (email Email) Local() string {
+	return email.local
 }
 
-func (e Email) Domain() string {
-	return e.domain
+func (email Email) Domain() string {
+	return email.domain
 }

@@ -28,8 +28,8 @@ const (
 
 var ErrNotACountry = errors.New("is not a country")
 
-func (c Country) String() string {
-	switch c {
+func (country Country) String() string {
+	switch country {
 	case Canada:
 		return "Canada"
 	case Mexico:
@@ -63,7 +63,7 @@ func (c Country) String() string {
 	case SouthKorea:
 		return "South Korea"
 	default:
-		return "unknown"
+		return "Unknown"
 	}
 }
 
