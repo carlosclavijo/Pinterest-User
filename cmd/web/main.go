@@ -6,7 +6,6 @@ import (
 	"github.com/carlosclavijo/Pinterest-User/internal/web"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -25,10 +24,7 @@ func main() {
 		log.Fatalf("[main] error inicializando DB: %v", err)
 	}
 
-	// 4. Inicializar servicios
-	jwtService := services.NewJWTService(os.Getenv("JWT_SECRET"), time.Hour*24)
-
-	// 5. Iniciar servidor HTTP
+	jwtService := services.NewJWTService(cfg.JWTSecret, time.Hour*24)
 	routes := web.NewRoutes(db, *jwtService)
 
 	log.Println("[main] Servidor iniciado en :8080")

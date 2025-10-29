@@ -14,7 +14,7 @@ func NewPostgresDB(cfg *Config) (*sql.DB, error) {
 		cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.DBHost, cfg.DBPort,
 	)
 
-	log.Printf("[db] DSN: %s", dsn)
+	//log.Printf("[db] DSN: %s", dsn)
 
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {

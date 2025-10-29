@@ -31,5 +31,5 @@ DROP TABLE users;
 SELECT 'down SQL query';
 -- +goose StatementEnd
 
--- goose postgres "user=postgres password=abc12345 dbname=pinterest-user sslmode=disable" down
--- goose postgres "user=postgres password=abc12345 dbname=pinterest-user sslmode=disable" up
+-- goose postgres "user=postgres password=abc12345 dbname=pinterest sslmode=disable" down
+-- goose postgres "user=postgres password=abc12345 dbname=pinterest sslmode=disable" up
