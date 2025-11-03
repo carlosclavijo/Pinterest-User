@@ -3,8 +3,8 @@ package handlers
 import (
 	"context"
 	"errors"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/queries"
+	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-User/internal/application/user/queries"
 	"github.com/stretchr/testify/require"
 	"testing"
 )

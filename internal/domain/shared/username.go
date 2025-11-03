@@ -14,7 +14,6 @@ var (
 	ErrLongUsername    = errors.New("username is too long, maximum size is 30")
 	ErrShortUsername   = errors.New("username is too short, minimum size is 3")
 	ErrInvalidUsername = errors.New("username contains invalid characters")
-	ErrSameUsername    = errors.New("username cannot be change to itself")
 )
 
 func NewUsername(name string) (Username, error) {

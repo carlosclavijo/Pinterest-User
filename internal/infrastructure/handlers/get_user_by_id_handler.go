@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"context"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/mappers"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/queries"
+	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-User/internal/application/user/mappers"
+	"github.com/carlosclavijo/Pinterest-User/internal/application/user/queries"
 )
 
 func (handler *UserHandler) HandleGetById(context context.Context, query queries.GetUserById) (*dto.UserDTO, error) {

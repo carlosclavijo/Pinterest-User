@@ -16,9 +16,9 @@ CREATE TABLE users
     profile_pic   VARCHAR(255),
     web_site      VARCHAR(255),
     visibility    BOOL                  DEFAULT TRUE,
-    last_login_at TIMESTAMP         NOT NULL,
-    created_at    TIMESTAMP         NOT NULL,
-    updated_at    TIMESTAMP         NOT NULL,
+    last_login_at TIMESTAMP    NOT NULL,
+    created_at    TIMESTAMP    NOT NULL,
+    updated_at    TIMESTAMP    NOT NULL,
     deleted_at    TIMESTAMP
 );
 -- +goose StatementBegin

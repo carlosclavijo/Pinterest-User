@@ -1,7 +1,8 @@
 package persistence
 
 import (
-	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/extensions"
+	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/services"
+	"log"
 )
 
 type Config struct {
@@ -13,13 +14,10 @@ type Config struct {
 	JWTSecret  string
 }
 
-func LoadConfig(v *extensions.VaultClient) *Config {
+func LoadConfig(v *services.VaultClient) *Config {
 	secret, err := v.GetSecret("pinterest/vault")
-	if err == nil {
-		return &Config{
-			DBUser: "postgres",
-			DBPassword:
-		}
+	if err != nil {
+		log.Fatalf("error fetching secrets: %v", err)
 	}
 
 	return &Config{

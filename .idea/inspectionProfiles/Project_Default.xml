@@ -22,6 +22,8 @@
         <method importPath="database/sql" receiver="*DB" name="Close" />
         <method importPath="io" receiver="ReadCloser" name="Close" />
         <method importPath="net/http" receiver="ResponseWriter" name="Write" />
+        <method importPath="os" receiver="*File" name="Close" />
+        <method importPath="mime/multipart" receiver="File" name="Close" />
       </methods>
     </inspection_tool>
     <inspection_tool class="SqlNoDataSourceInspection" enabled="false" level="WARNING" enabled_by_default="false" />

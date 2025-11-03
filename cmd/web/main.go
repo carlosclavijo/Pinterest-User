@@ -1,8 +1,8 @@
 package main
 
 import (
-	services "github.com/carlosclavijo/Pinterest-User/internal/infrastructure/extensions"
 	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/persistence"
+	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/services"
 	"github.com/carlosclavijo/Pinterest-User/internal/web"
 	"log"
 	"net/http"

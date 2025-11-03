@@ -247,7 +247,7 @@ func (u *User) ChangeLastLoginAt() {
 	u.lastLoginAt = time.Now()
 }
 
-func (u *User) ChangeUpdatedAt() {
+func (u *User) Update() {
 	u.updatedAt = time.Now()
 }
 

@@ -271,7 +271,7 @@ func TestNewUser(t *testing.T) {
 	oldTime = usr.UpdatedAt()
 	time.Sleep(10 * time.Millisecond)
 
-	usr.ChangeUpdatedAt()
+	usr.Update()
 
 	assert.True(t, usr.UpdatedAt().After(oldTime))
 

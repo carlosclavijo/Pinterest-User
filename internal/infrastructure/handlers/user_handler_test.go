@@ -206,7 +206,7 @@ func listUsers() []*users.User {
 		time.Sleep(5 * time.Millisecond)
 
 		usr.ChangeLastLoginAt()
-		usr.ChangeUpdatedAt()
+		usr.Update()
 
 		if c.deletedAt != nil {
 			time.Sleep(5 * time.Millisecond)

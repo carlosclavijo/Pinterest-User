@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/commands"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/dto"
+	"github.com/carlosclavijo/Pinterest-User/internal/application/commands/users"
+	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
 	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/persistence/repositories"
 	"github.com/carlosclavijo/Pinterest-User/internal/web/helpers"
 	"github.com/go-chi/chi/v5"
@@ -527,7 +527,7 @@ func TestUserController_CreateUser(t *testing.T) {
 
 	userDto := mockUserDto()
 
-	cmd := commands.CreateUserCommand{
+	cmd := users.CreateUserCommand{
 		FirstName: userDto.FirstName,
 		LastName:  userDto.LastName,
 		Username:  userDto.Username,
@@ -605,7 +605,7 @@ func TestUserController_CreateUser_FailCreate(t *testing.T) {
 
 	userDto := mockUserDto()
 
-	cmd := commands.CreateUserCommand{
+	cmd := users.CreateUserCommand{
 		FirstName: userDto.FirstName,
 		LastName:  userDto.LastName,
 		Username:  userDto.Username,
