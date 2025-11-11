@@ -1,13 +1,14 @@
 package mappers
 
 import (
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"fmt"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	users "github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"time"
 )
 
 func MapToUserDTO(user *users.User) *dto.UserDTO {
-	var phone, information, profilePic, website *string
+	var phone, information, profilePic, profilePicURL, website *string
 
 	if user.Phone() != nil {
 		p := user.Phone().String()
@@ -20,6 +21,8 @@ func MapToUserDTO(user *users.User) *dto.UserDTO {
 
 	if user.ProfilePic() != nil {
 		profilePic = user.ProfilePic()
+		url := fmt.Sprintf("http://localhost:8080/static/%s", *user.ProfilePic())
+		profilePicURL = &url
 	}
 
 	if user.WebSite() != nil {
@@ -28,20 +31,21 @@ func MapToUserDTO(user *users.User) *dto.UserDTO {
 	}
 
 	return &dto.UserDTO{
-		Id:          user.Id(),
-		FirstName:   user.FirstName(),
-		LastName:    user.LastName(),
-		Username:    user.Username().String(),
-		Email:       user.Email().String(),
-		Gender:      user.Gender().String(),
-		Birth:       user.Birth().Time(),
-		Country:     user.Country().String(),
-		Language:    user.Language().String(),
-		Phone:       phone,
-		Information: information,
-		ProfilePic:  profilePic,
-		Website:     website,
-		Visibility:  user.Visibility(),
+		Id:            user.Id(),
+		FirstName:     user.FirstName(),
+		LastName:      user.LastName(),
+		Username:      user.Username().String(),
+		Email:         user.Email().String(),
+		Gender:        user.Gender().String(),
+		Birth:         user.Birth().Time(),
+		Country:       user.Country().String(),
+		Language:      user.Language().String(),
+		Phone:         phone,
+		Information:   information,
+		ProfilePic:    profilePic,
+		ProfilePicURL: profilePicURL,
+		Website:       website,
+		Visibility:    user.Visibility(),
 	}
 }
 

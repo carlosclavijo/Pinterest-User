@@ -3,9 +3,9 @@ package handlers
 import (
 	"context"
 	"errors"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/abstractions"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/abstractions"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

@@ -6,10 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/commands/users"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/persistence/repositories"
-	"github.com/carlosclavijo/Pinterest-User/internal/web/helpers"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/commands"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/infrastructure/persistence/repositories"
+	"github.com/carlosclavijo/Pinterest-Services/internal/infrastructure/services"
+	"github.com/carlosclavijo/Pinterest-Services/internal/web/helpers"
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
@@ -36,7 +37,7 @@ func TestUserController_GetAllUsers(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 	rows := sqlmock.NewRows(columns).AddRow(
@@ -73,7 +74,7 @@ func TestUserController_GetAllUsers_Error(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	mock.ExpectQuery(regexp.QuoteMeta(repositories.QueryGetAllUsers)).WillReturnError(errors.New("DB connection failed"))
 
@@ -99,7 +100,7 @@ func TestUserController_GetListUsers(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 	rows := sqlmock.NewRows(columns).AddRow(
@@ -133,7 +134,7 @@ func TestUserController_GetListUsers_Error(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	mock.ExpectQuery(regexp.QuoteMeta(repositories.QueryGetListUsers)).WillReturnError(errors.New("DB connection failed"))
 
@@ -159,7 +160,7 @@ func TestUserController_GetUserById(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	cols := append([]string(nil), columns...)
 	cols = cols[1:]
@@ -197,7 +198,7 @@ func TestUserController_GetUserById_InvalidUUID(t *testing.T) {
 	db, _, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	req := httptest.NewRequest(http.MethodGet, "/users/invalid-uuid", nil)
 	rctx := chi.NewRouteContext()
@@ -221,7 +222,7 @@ func TestUserController_GetUserById_Error(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 	mock.ExpectQuery(regexp.QuoteMeta(repositories.QueryGetUserById)).WithArgs(userDto.Id).WillReturnError(errors.New("DB connection failed"))
@@ -251,7 +252,7 @@ func TestUserController_GetUserByUsername(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	cols := append([]string(nil), columns...)
 	cols = append(cols[:3], cols[4:]...)
@@ -289,7 +290,7 @@ func TestUserController_GetUserByUsername_Error(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 	mock.ExpectQuery(regexp.QuoteMeta(repositories.QueryGetUserByUsername)).WithArgs(userDto.Username).WillReturnError(errors.New("DB connection failed"))
@@ -319,7 +320,7 @@ func TestUserController_GetUserByEmail(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	cols := append([]string(nil), columns...)
 	cols = append(cols[:4], cols[5:]...)
@@ -357,7 +358,7 @@ func TestUserController_GetUserByEmail_Error(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 	mock.ExpectQuery(regexp.QuoteMeta(repositories.QueryGetUserByEmail)).WithArgs(userDto.Email).WillReturnError(errors.New("DB connection failed"))
@@ -387,7 +388,7 @@ func TestUserController_GetUsersByCountry(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	cols := append([]string(nil), columns...)
 	cols = append(cols[:9], cols[10:]...)
@@ -425,7 +426,7 @@ func TestUserController_GetUsersByCountry_Error(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 	mock.ExpectQuery(regexp.QuoteMeta(repositories.QueryGetUsersByCountry)).WithArgs(userDto.Country).WillReturnError(errors.New("DB connection failed"))
@@ -455,7 +456,7 @@ func TestUserController_GetUsersByLanguage(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	cols := append([]string(nil), columns...)
 	cols = append(cols[:10], cols[11:]...)
@@ -493,7 +494,7 @@ func TestUserController_GetUsersByLanguage_Error(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 	mock.ExpectQuery(regexp.QuoteMeta(repositories.QueryGetUsersByLanguage)).WithArgs(userDto.Language).WillReturnError(errors.New("DB connection failed"))
@@ -523,11 +524,11 @@ func TestUserController_CreateUser(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 
-	cmd := users.CreateUserCommand{
+	cmd := commands.CreateUserCommand{
 		FirstName: userDto.FirstName,
 		LastName:  userDto.LastName,
 		Username:  userDto.Username,
@@ -582,7 +583,7 @@ func TestUserController_CreateUser_InvalidBody(t *testing.T) {
 	db, _, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 	req := httptest.NewRequest(http.MethodPost, "/users", strings.NewReader("{invalid_json}"))
 	rr := httptest.NewRecorder()
 
@@ -601,11 +602,11 @@ func TestUserController_CreateUser_FailCreate(t *testing.T) {
 	db, mock, _ := sqlmock.New()
 	defer db.Close()
 
-	ctrl := NewUserController(db)
+	ctrl := NewUserController(db, services.JWTService{})
 
 	userDto := mockUserDto()
 
-	cmd := users.CreateUserCommand{
+	cmd := commands.CreateUserCommand{
 		FirstName: userDto.FirstName,
 		LastName:  userDto.LastName,
 		Username:  userDto.Username,

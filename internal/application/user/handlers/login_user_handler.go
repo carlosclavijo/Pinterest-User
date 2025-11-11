@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"context"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/commands"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/mappers"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/commands"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/mappers"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -38,7 +38,7 @@ func (h *UserHandler) HandleLogin(ctx context.Context, cmd commands.LoginUserCom
 	}
 
 	usr.ChangeLastLoginAt()
-	usr, err = h.repository.Update(ctx, usr)
+	err = h.repository.Update(ctx, usr)
 	if err != nil {
 		return nil, err
 	}

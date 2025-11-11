@@ -2,12 +2,12 @@ package middleware
 
 import (
 	"context"
-	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/services"
+	"github.com/carlosclavijo/Pinterest-Services/internal/infrastructure/services"
 	"net/http"
 	"strings"
 )
 
-func JWTMiddleware(jwtService *services.JWTService) func(http.Handler) http.Handler {
+func JWTMiddleware(jwtService *services.JWTService, blacklistRepo *services.TokenBlacklist) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			authHeader := r.Header.Get("Authorization")
@@ -22,7 +22,17 @@ func JWTMiddleware(jwtService *services.JWTService) func(http.Handler) http.Hand
 				return
 			}
 
-			userID, err := jwtService.Validate(parts[1])
+			tokenStr := parts[1]
+
+			if blacklisted, err := blacklistRepo.IsBlacklisted(tokenStr); err != nil {
+				http.Error(w, "internal server error", http.StatusInternalServerError)
+				return
+			} else if blacklisted {
+				http.Error(w, "token revoked", http.StatusUnauthorized)
+				return
+			}
+
+			userID, err := jwtService.Validate(tokenStr)
 			if err != nil {
 				http.Error(w, "invalid or expired token", http.StatusUnauthorized)
 				return

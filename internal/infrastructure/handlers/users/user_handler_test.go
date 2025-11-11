@@ -1,10 +1,10 @@
-package handlers
+package users
 
 import (
 	"context"
 	"errors"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"

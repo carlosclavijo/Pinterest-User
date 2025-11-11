@@ -1,10 +1,10 @@
-package handlers
+package users
 
 import (
 	"context"
 	"errors"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/queries"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/queries"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
@@ -18,7 +18,7 @@ func TestUserHandler_HandleGetByEmail(t *testing.T) {
 	handler := NewUserHandler(mockRepository, mockFactory)
 	usr := listUsers()[0]
 
-	qry := queries.GetUserByEmail{
+	qry := queries.GetUserByEmailQuery{
 		Email: "valid@email.com",
 	}
 
@@ -41,7 +41,7 @@ func TestUserHandler_HandleGetByEmail_Error(t *testing.T) {
 
 	handler := NewUserHandler(mockRepository, mockFactory)
 
-	qry := queries.GetUserByEmail{
+	qry := queries.GetUserByEmailQuery{
 		Email: "valid@email.com",
 	}
 

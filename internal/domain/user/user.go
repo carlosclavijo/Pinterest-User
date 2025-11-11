@@ -2,8 +2,8 @@ package users
 
 import (
 	"errors"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/abstractions"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/abstractions"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
 	"github.com/google/uuid"
 	"time"
 )

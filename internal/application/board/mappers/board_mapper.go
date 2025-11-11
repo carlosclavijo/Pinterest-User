@@ -1,8 +1,8 @@
 package mappers
 
 import (
-	"github.com/carlosclavijo/Pinterest-User/internal/application/board/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/board"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/board/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/board"
 	"time"
 )
 

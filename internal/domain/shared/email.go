@@ -29,6 +29,7 @@ func NewEmail(email string) (Email, error) {
 	if !regexp.MustCompile(emailRegex).MatchString(email) {
 		return Email{}, fmt.Errorf("%w: got %s", ErrInvalidEmail, email)
 	}
+
 	parts := strings.Split(email, "@")
 	localPart, domainPart := parts[0], parts[1]
 	if len(localPart) > 64 {
@@ -37,6 +38,7 @@ func NewEmail(email string) (Email, error) {
 	if len(domainPart) > 255 {
 		return Email{}, fmt.Errorf("%w: got %s", ErrLongDomainEmail, email)
 	}
+
 	return Email{local: localPart, domain: domainPart, total: email}, nil
 }
 

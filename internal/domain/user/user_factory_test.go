@@ -1,7 +1,7 @@
 package users
 
 import (
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

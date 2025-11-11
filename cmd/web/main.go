@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/persistence"
-	"github.com/carlosclavijo/Pinterest-User/internal/infrastructure/services"
-	"github.com/carlosclavijo/Pinterest-User/internal/web"
-	"log"
+	"github.com/carlosclavijo/Pinterest-Services/internal/infrastructure"
+	"github.com/carlosclavijo/Pinterest-Services/internal/infrastructure/services"
+	"github.com/carlosclavijo/Pinterest-Services/internal/web"
+	"go.uber.org/zap"
 	"net/http"
 	"time"
 )
@@ -12,24 +12,40 @@ import (
 const (
 	connection      = ":8080"
 	vaultConnection = "http://127.0.0.1:8200"
+	token           = "root"
+	environment     = "development"
 )
 
 func main() {
-	vaultClient := services.NewVaultClient(vaultConnection, "root")
+	// Initialize global logger
+	services.InitLogger(environment)
+	
+	log := services.Logger()
+	defer log.Sync()
 
-	cfg := persistence.LoadConfig(vaultClient)
+	// Vault client
+	vaultClient := services.NewVaultClient(vaultConnection, token)
 
-	db, err := persistence.NewPostgresDB(cfg)
+	// Load configuration (from Vault or env)
+	cfg := infrastructure.LoadConfig(vaultClient)
+
+	// Database
+	db, err := cfg.DBConfig.NewPostgresDB()
 	if err != nil {
-		log.Fatalf("[main] error inicializando DB: %v", err)
+		log.Fatal("error initializing DB", zap.Error(err))
 	}
 
+	// Redis + JWT + Routes
+	rdb := services.NewRedisClient()
+	blacklistRepo := services.NewTokenBlacklistRepository(rdb)
 	jwtService := services.NewJWTService(cfg.JWTSecret, time.Hour*24)
-	routes := web.NewRoutes(db, *jwtService)
+	routes := web.NewRoutes(db, jwtService, blacklistRepo, &cfg.EmailService)
 
-	log.Println("[main] Servidor iniciado en :8080")
+	// Start server
+	log.Info("Server starting", zap.String("connection", connection), zap.String("environment", environment))
+
 	if err := http.ListenAndServe(connection, routes.Router()); err != nil {
-		log.Fatalf("[main] error servidor: %v", err)
+		log.Fatal("server error", zap.Error(err))
 	}
 }
 

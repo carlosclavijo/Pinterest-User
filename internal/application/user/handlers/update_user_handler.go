@@ -2,12 +2,12 @@ package handlers
 
 import (
 	"context"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/commands"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/mappers"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/abstractions"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/commands"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/mappers"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/abstractions"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"github.com/google/uuid"
 )
 
@@ -197,7 +197,7 @@ func (h *UserHandler) HandleUpdate(ctx context.Context, cmd commands.UpdateUserC
 
 	usr.Update()
 
-	if usr, err = h.repository.Update(ctx, usr); err != nil {
+	if err = h.repository.Update(ctx, usr); err != nil {
 		return nil, err
 	}
 

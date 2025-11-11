@@ -2,8 +2,7 @@ package pins
 
 import (
 	"errors"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/abstractions"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/tag"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/abstractions"
 	"github.com/google/uuid"
 	"slices"
 	"time"
@@ -29,13 +28,13 @@ type Pin struct {
 	likeCount    int
 	commentCount int
 	visibility   bool
-	tags         []tag.Tag
+	tags         []Tag
 	createdAt    time.Time
 	updatedAt    time.Time
 	deletedAt    *time.Time
 }
 
-func NewPin(userId, boardId uuid.UUID, title string, description *string, tags []tag.Tag) *Pin {
+func NewPin(userId, boardId uuid.UUID, title string, description *string, tags []Tag) *Pin {
 	return &Pin{
 		AggregateRoot: abstractions.NewAggregateRoot(uuid.New()),
 		userId:        userId,
@@ -92,7 +91,7 @@ func (p *Pin) Visibility() bool {
 	return p.visibility
 }
 
-func (p *Pin) Tags() []tag.Tag {
+func (p *Pin) Tags() []Tag {
 	return p.tags
 }
 
@@ -156,11 +155,11 @@ func (p *Pin) LessCommentCount() {
 	p.commentCount--
 }
 
-func (p *Pin) AddTag(tag tag.Tag) {
+func (p *Pin) AddTag(tag Tag) {
 	p.tags = append(p.tags, tag)
 }
 
-func (p *Pin) SubTag(tag tag.Tag) {
+func (p *Pin) SubTag(tag Tag) {
 	i := slices.Index(p.tags, tag)
 	p.tags = append(p.tags[:i], p.tags[i+1:]...)
 }

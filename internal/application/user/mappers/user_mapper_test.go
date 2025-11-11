@@ -1,8 +1,8 @@
 package mappers
 
 import (
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
+	users "github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

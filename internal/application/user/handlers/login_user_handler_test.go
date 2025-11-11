@@ -3,10 +3,10 @@ package handlers
 import (
 	"context"
 	"errors"
-	users2 "github.com/carlosclavijo/Pinterest-User/internal/application/commands/users"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/commands"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/crypto/bcrypt"
@@ -188,11 +188,11 @@ func TestUserHandler_HandleLogin_UpdateError(t *testing.T) {
 	mockRepository.AssertExpectations(t)
 }
 
-func validLoginCommand() users2.LoginUserCommand {
+func validLoginCommand() commands.LoginUserCommand {
 	email := "valid@email.com"
 	password := "5tr0ngP4ssworD!"
 
-	cmd := users2.LoginUserCommand{
+	cmd := commands.LoginUserCommand{
 		Email:    email,
 		Password: password,
 	}

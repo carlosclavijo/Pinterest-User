@@ -21,6 +21,16 @@ CREATE TABLE users
     updated_at    TIMESTAMP    NOT NULL,
     deleted_at    TIMESTAMP
 );
+
+CREATE TABLE email_verifications(
+    id          UUID PRIMARY KEY,
+    user_id     UUID REFERENCES users(id) ON DELETE CASCADE,
+    token       VARCHAR(255) NOT NULL UNIQUE,
+    created_at  TIMESTAMP NOT NULL,
+    expires_at  TIMESTAMP NOT NULL,
+    verified_at TIMESTAMP
+);
+
 -- +goose StatementBegin
 SELECT 'up SQL query';
 -- +goose StatementEnd

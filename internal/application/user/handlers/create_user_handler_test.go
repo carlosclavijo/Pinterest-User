@@ -3,10 +3,10 @@ package handlers
 import (
 	"context"
 	"errors"
-	users2 "github.com/carlosclavijo/Pinterest-User/internal/application/commands/users"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/commands"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -382,9 +382,9 @@ func TestUserHandler_HandleCreate_CreateError(t *testing.T) {
 	mockRepository.AssertExpectations(t)
 }
 
-func validCreateUserCommand() users2.CreateUserCommand {
+func validCreateUserCommand() commands.CreateUserCommand {
 	phoneStr := "+591-77141516"
-	cmd := users2.CreateUserCommand{
+	cmd := commands.CreateUserCommand{
 		FirstName: "John",
 		LastName:  "Doe",
 		Username:  "johndoe",

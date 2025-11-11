@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"context"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/dto"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/mappers"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/dto"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/mappers"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 	"github.com/google/uuid"
 )
 
@@ -29,7 +29,7 @@ func (h *UserHandler) HandleDelete(ctx context.Context, id uuid.UUID) (*dto.User
 		return nil, err
 	}
 
-	if usr, err = h.repository.Delete(ctx, usr); err != nil {
+	if err = h.repository.Delete(ctx, usr); err != nil {
 		return nil, err
 	}
 

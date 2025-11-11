@@ -1,17 +1,16 @@
 package pins
 
 import (
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/tag"
 	"github.com/google/uuid"
 )
 
 type PinFactory interface {
-	Create(userId, boardId uuid.UUID, title string, description *string, tags []tag.Tag) (*Pin, error)
+	Create(userId, boardId uuid.UUID, title string, description *string, tags []Tag) (*Pin, error)
 }
 
 type pinFactory struct{}
 
-func (p pinFactory) Create(userId, boardId uuid.UUID, title string, description *string, tags []tag.Tag) (*Pin, error) {
+func (p pinFactory) Create(userId, boardId uuid.UUID, title string, description *string, tags []Tag) (*Pin, error) {
 	if userId == uuid.Nil {
 		return nil, ErrNilUserIdPin
 	}

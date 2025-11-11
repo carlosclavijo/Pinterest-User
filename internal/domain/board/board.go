@@ -2,13 +2,14 @@ package boards
 
 import (
 	"errors"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/abstractions"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/abstractions"
 	"github.com/google/uuid"
 	"time"
 )
 
 var (
-	ErrNilUserIdBoard = errors.New("user id cannot be nil")
+	ErrIdNilBoard           = errors.New("board id cannot be nil")
+	ErrNotFoundBoard        = errors.New("board not found")
 	ErrEmptyNameBoard       = errors.New("name can't be empty")
 	ErrLongNameBoard        = errors.New("name can't be more than 50 characters long")
 	ErrLongDescriptionBoard = errors.New("description can't be more than 50 characters long")

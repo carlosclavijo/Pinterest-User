@@ -3,13 +3,20 @@ package persistence
 import (
 	"database/sql"
 	"fmt"
-	"log"
-
 	_ "github.com/lib/pq"
+	"log"
 )
 
-func NewPostgresDB(cfg *Config) (*sql.DB, error) {
-	dsn := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable", cfg.DBUser, cfg.DBPassword, cfg.DBName, cfg.DBHost, cfg.DBPort)
+type DBConfig struct {
+	DBUser     string
+	DBPassword string
+	DBName     string
+	DBHost     string
+	DBPort     string
+}
+
+func (c *DBConfig) NewPostgresDB() (*sql.DB, error) {
+	dsn := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable", c.DBUser, c.DBPassword, c.DBName, c.DBHost, c.DBPort)
 
 	db, err := sql.Open("postgres", dsn)
 	if err != nil {

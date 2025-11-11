@@ -2,7 +2,7 @@ package users
 
 import (
 	"fmt"
-	"github.com/carlosclavijo/Pinterest-User/internal/domain/shared"
+	"github.com/carlosclavijo/Pinterest-Services/internal/domain/shared"
 	"log"
 	"strings"
 	"unicode"

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Pinterest-User.iml" filepath="$PROJECT_DIR$/.idea/Pinterest-User.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Pinterest-Services.iml" filepath="$PROJECT_DIR$/.idea/Pinterest-Services.iml" />
     </modules>
   </component>
 </project>

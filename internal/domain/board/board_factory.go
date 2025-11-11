@@ -12,7 +12,7 @@ type boardFactory struct{}
 
 func (b boardFactory) Create(userId uuid.UUID, name string, description *string, visibility bool) (*Board, error) {
 	if userId == uuid.Nil {
-		return nil, ErrNilUserIdBoard
+		return nil, ErrIdNilBoard
 	}
 
 	if name == "" {

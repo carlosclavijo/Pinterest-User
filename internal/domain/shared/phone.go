@@ -23,9 +23,11 @@ func NewPhone(phone *string) (*Phone, error) {
 	if phone == nil || *phone == "" {
 		return nil, nil
 	}
+
 	if !isNumericPhone(*phone) {
 		return nil, fmt.Errorf("%w: got %s", ErrNotNumericPhoneNumber, *phone)
 	}
+
 	parts := strings.Split(*phone, "-")
 	dialPart, valuePart := parts[0], parts[1]
 	if len(valuePart) < 8 {
@@ -34,6 +36,7 @@ func NewPhone(phone *string) (*Phone, error) {
 	if len(valuePart) > 12 {
 		return nil, fmt.Errorf("%w: got %s", ErrLongPhoneNumber, *phone)
 	}
+
 	dc, _ := ParseDialCode(dialPart)
 	return &Phone{dial: dc, value: valuePart, total: *phone}, nil
 }

@@ -37,6 +37,5 @@ func (fs *FileService) SaveProfilePic(file multipart.File, filename string) (str
 		return "", fmt.Errorf("cannot write file: %w", err)
 	}
 
-	relativePath := filepath.ToSlash(filepath.Join("uploads", "profile_pics", uniqueName))
-	return relativePath, nil
+	return uniqueName, nil
 }

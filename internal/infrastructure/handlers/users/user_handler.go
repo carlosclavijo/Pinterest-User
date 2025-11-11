@@ -1,6 +1,6 @@
-package handlers
+package users
 
-import "github.com/carlosclavijo/Pinterest-User/internal/domain/user"
+import users "github.com/carlosclavijo/Pinterest-Services/internal/domain/user"
 
 type UserHandler struct {
 	repository users.UserRepository

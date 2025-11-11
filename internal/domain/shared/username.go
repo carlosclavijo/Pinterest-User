@@ -26,11 +26,13 @@ func NewUsername(name string) (Username, error) {
 	if len(name) < 3 {
 		return Username{}, fmt.Errorf("%w: got %s", ErrShortUsername, name)
 	}
+
 	for _, char := range name {
 		if (char < 'a' || char > 'z') && (char < 'A' || char > 'Z') && (char < '0' || char > '9') && char != '_' && char != '.' {
 			return Username{}, fmt.Errorf("%w: got %s", ErrInvalidUsername, name)
 		}
 	}
+
 	return Username{name: name}, nil
 }
 

@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"context"
-	"github.com/carlosclavijo/Pinterest-User/internal/application/user/commands"
+	"github.com/carlosclavijo/Pinterest-Services/internal/application/user/commands"
 	"github.com/google/uuid"
 )
 
@@ -18,6 +18,7 @@ func (h *UserHandler) HandleUpdateProfilePic(ctx context.Context, cmd commands.U
 	}
 
 	user.ChangeProfilePic(&cmd.ProfilePic)
-	_, err = h.repository.Update(ctx, user)
+	err = h.repository.Update(ctx, user)
+
 	return err
 }

@@ -1,0 +1,747 @@
+definitions:
+  commands.CreateUserCommand:
+    properties:
+      birth:
+        type: string
+      country:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      language:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      username:
+        type: string
+    type: object
+  commands.LoginUserCommand:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  commands.UpdateUserCommand:
+    properties:
+      birth:
+        type: string
+      country:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      information:
+        type: string
+      language:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      profile_pic:
+        type: string
+      user_name:
+        type: string
+      visibility:
+        type: boolean
+      web_site:
+        type: string
+    type: object
+  dto.UserDTO:
+    properties:
+      birth:
+        type: string
+      country:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      information:
+        type: string
+      language:
+        type: string
+      last_name:
+        type: string
+      phone:
+        type: string
+      profilePic:
+        type: string
+      profilePicURL:
+        type: string
+      username:
+        type: string
+      visibility:
+        type: boolean
+      website:
+        type: string
+    type: object
+  dto.UserResponse:
+    properties:
+      birth:
+        type: string
+      country:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      information:
+        type: string
+      language:
+        type: string
+      last_login_at:
+        type: string
+      last_name:
+        type: string
+      phone:
+        type: string
+      profilePic:
+        type: string
+      profilePicURL:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+      visibility:
+        type: boolean
+      website:
+        type: string
+    type: object
+  helpers.Error:
+    properties:
+      code:
+        type: string
+      err:
+        type: string
+      message:
+        type: string
+    type: object
+  helpers.GetCountriesList:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/shared.Country'
+        type: array
+      success:
+        type: boolean
+    type: object
+  helpers.GetLanguagesList:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/shared.Language'
+        type: array
+      success:
+        type: boolean
+    type: object
+  helpers.GetListUsersDTO:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dto.UserDTO'
+        type: array
+      error:
+        $ref: '#/definitions/helpers.Error'
+      length:
+        type: integer
+      success:
+        type: boolean
+    type: object
+  helpers.GetUserDTO:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dto.UserDTO'
+        type: array
+      error:
+        $ref: '#/definitions/helpers.Error'
+      success:
+        type: boolean
+    type: object
+  helpers.GetUserResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/dto.UserResponse'
+        type: array
+      error:
+        $ref: '#/definitions/helpers.Error'
+      success:
+        type: boolean
+    type: object
+  helpers.LoginSuccessResponse:
+    properties:
+      data:
+        properties:
+          token:
+            type: string
+          user:
+            $ref: '#/definitions/dto.UserDTO'
+        type: object
+      error:
+        $ref: '#/definitions/helpers.Error'
+      success:
+        type: boolean
+    type: object
+  helpers.LogoutSuccessResponse:
+    properties:
+      data:
+        type: string
+      success:
+        type: boolean
+    type: object
+  shared.Country:
+    enum:
+    - CA
+    - MX
+    - US
+    - AR
+    - BO
+    - BR
+    - GB
+    - FR
+    - DE
+    - ES
+    - IT
+    - JP
+    - CN
+    - IN
+    - AU
+    - KR
+    type: string
+    x-enum-varnames:
+    - Canada
+    - Mexico
+    - UnitedStates
+    - Argentina
+    - Bolivia
+    - Brazil
+    - UnitedKingdom
+    - France
+    - Germany
+    - Spain
+    - Italy
+    - Japan
+    - China
+    - India
+    - Australia
+    - SouthKorea
+  shared.Language:
+    enum:
+    - EN
+    - ES
+    - FR
+    - DE
+    - IT
+    - PT
+    - JA
+    - CH
+    - KO
+    - HI
+    type: string
+    x-enum-varnames:
+    - English
+    - Spanish
+    - French
+    - German
+    - Italian
+    - Portuguese
+    - Japanese
+    - Chinese
+    - Korean
+    - Hindi
+info:
+  contact: {}
+paths:
+  /users/:
+    put:
+      consumes:
+      - application/json
+      description: Updates the authenticated user's information
+      parameters:
+      - description: User update payload
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/commands.UpdateUserCommand'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "403":
+          description: 'Forbidden: cannot update another user'
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+      summary: Update a user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Deleted user
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "400":
+          description: Invalid UUID
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+      summary: Delete a user
+      tags:
+      - users
+  /users/all:
+    get:
+      description: Returns a list of all registered users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+      summary: Get all users
+      tags:
+      - users
+  /users/countries:
+    get:
+      description: Returns a list of available countries
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of countries
+          schema:
+            $ref: '#/definitions/helpers.GetCountriesList'
+      summary: List all countries
+      tags:
+      - users
+  /users/country/{country}:
+    get:
+      description: Returns a list of users filtered by country
+      parameters:
+      - description: Country name
+        in: path
+        name: country
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "400":
+          description: Invalid country
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+      summary: Get users by country
+      tags:
+      - users
+  /users/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new user in the system
+      parameters:
+      - description: User creation payload
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/commands.CreateUserCommand'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+      summary: Create a new user
+      tags:
+      - users
+  /users/email/{email}:
+    get:
+      description: Returns a single user by email address
+      parameters:
+      - description: User email
+        in: path
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+        "400":
+          description: Invalid email
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+      summary: Get user by email
+      tags:
+      - users
+  /users/id/{id}:
+    get:
+      description: Returns a single user by UUID
+      parameters:
+      - description: User ID (UUID)
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+        "400":
+          description: Invalid id
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+      summary: Get user by ID
+      tags:
+      - users
+  /users/language/{language}:
+    get:
+      description: Returns a list of users filtered by language
+      parameters:
+      - description: Country name
+        in: path
+        name: country
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "400":
+          description: Invalid country
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+      summary: Get users by language
+      tags:
+      - users
+  /users/languages:
+    get:
+      description: Returns a list of available languages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of languages
+          schema:
+            $ref: '#/definitions/helpers.GetLanguagesList'
+      summary: List all languages
+      tags:
+      - users
+  /users/like-username/{username}:
+    get:
+      description: Returns a list of users whose usernames match the provided pattern
+      parameters:
+      - description: Username pattern
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "400":
+          description: Invalid username
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+      summary: Get users by partial username
+      tags:
+      - users
+  /users/list:
+    get:
+      description: Returns all users where deleted_at IS NULL
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetListUsersDTO'
+      summary: Get list of active users
+      tags:
+      - Users
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user and returns a JWT token
+      parameters:
+      - description: User login payload
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/commands.LoginUserCommand'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User data and token
+          schema:
+            $ref: '#/definitions/helpers.LoginSuccessResponse'
+        "400":
+          description: Invalid request body
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "401":
+          description: Authentication failed
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+      summary: Login a user
+      tags:
+      - users
+  /users/logout:
+    post:
+      description: Revokes the current JWT token
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Logout successful
+          schema:
+            $ref: '#/definitions/helpers.LogoutSuccessResponse'
+        "401":
+          description: Missing or invalid token
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "500":
+          description: Logout failed
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+      summary: Logout user
+      tags:
+      - users
+  /users/profilepic/{id}:
+    patch:
+      consumes:
+      - multipart/form-data
+      description: Uploads a profile picture for the given user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Profile picture file
+        in: formData
+        name: profile_pic
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Uploaded file info
+          schema:
+            $ref: '#/definitions/helpers.LogoutSuccessResponse'
+        "400":
+          description: Bad request / missing file
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+      summary: Upload a user's profile picture
+      tags:
+      - users
+  /users/restore/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Restores a user by ID that was previously soft-deleted
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Restored user
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "400":
+          description: Invalid UUID
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserResponse'
+      summary: Restore a deleted user
+      tags:
+      - users
+  /users/username/{username}:
+    get:
+      description: Returns a single user by username
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+        "400":
+          description: Invalid username
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+        "500":
+          description: Server error
+          schema:
+            $ref: '#/definitions/helpers.GetUserDTO'
+      summary: Get user by username
+      tags:
+      - users
+  /verify-email:
+    get:
+      consumes:
+      - application/json
+      description: Verifies the email of a user using a token
+      parameters:
+      - description: Verification token
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "303":
+          description: Redirects to login page with verification success
+        "400":
+          description: Missing or invalid token
+          schema:
+            type: string
+      summary: Verify user's email
+      tags:
+      - users
+swagger: "2.0"

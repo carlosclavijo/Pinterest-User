@@ -1,7 +1,10 @@
 package services
 
-import "github.com/golang-jwt/jwt/v5"
-import "time"
+import (
+	"fmt"
+	"github.com/golang-jwt/jwt/v5"
+	"time"
+)
 
 type JWTService struct {
 	secretKey string
@@ -32,4 +35,17 @@ func (j *JWTService) Validate(tokenStr string) (string, error) {
 
 	claims := token.Claims.(jwt.MapClaims)
 	return claims["user_id"].(string), nil
+}
+
+func (j *JWTService) ParseToken(tokenStr string) (map[string]any, error) {
+	token, _, err := jwt.NewParser().ParseUnverified(tokenStr, jwt.MapClaims{})
+	if err != nil {
+		return nil, err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok {
+		return claims, nil
+	}
+
+	return nil, fmt.Errorf("invalid claims")
 }

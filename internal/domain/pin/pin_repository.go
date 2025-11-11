@@ -16,6 +16,6 @@ type PinRepository interface {
 	ExistById(ctx context.Context, id uuid.UUID) (bool, error)
 
 	Create(ctx context.Context, pin *Pin) (*Pin, error)
-	Update(ctx context.Context, pin *Pin) (*Pin, error)
-	Delete(ctx context.Context, pin *Pin) (*Pin, error)
+	Update(ctx context.Context, pin *Pin) error
+	Delete(ctx context.Context, pin *Pin) error
 }

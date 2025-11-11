@@ -28,6 +28,7 @@ func NewBirthDate(birth time.Time) (BirthDate, error) {
 
 func isAnAdult(v time.Time) bool {
 	yearsAgo := time.Now().AddDate(-18, 0, 0)
+
 	return !v.After(yearsAgo)
 }
 
